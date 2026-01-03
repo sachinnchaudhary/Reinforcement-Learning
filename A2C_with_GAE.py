@@ -90,6 +90,7 @@ class A2Cgae:
                 gae = delta + self.gamma * self.lam * gae
                 advantages.insert(0, gae)
             advantages = torch.stack(advantages).detach()
+            
             returns = advantages + values.detach()
 
             policy_loss = -(torch.stack(log_probs) * advantages).sum()
@@ -103,7 +104,7 @@ class A2Cgae:
 
             if episode % 50 == 0:
                 print(f"Episode {episode}, return = {total_reward}")
-                
+
 if __name__ == "__main__":  
  agent = A2Cgae(env)
  agent.train(episodes=1000)
